@@ -1,4 +1,5 @@
 import type { Route } from "./+types/home";
+import styled from "styled-components";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -7,6 +8,11 @@ export function meta({}: Route.MetaArgs) {
   ];
 }
 
+const Body = styled.div`
+  font-family: "dos", sans-serif;
+  font-size: 22px;
+`
+
 export default function Home() {
-  return <div>HELLO WORLD</div>;
+  return <Body>You can use any of the following commands</Body>;
 }
