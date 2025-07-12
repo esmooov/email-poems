@@ -248,6 +248,7 @@ text: |
 `,Jo=le.div`
   padding: 10px 40px;
   white-space: pre-wrap;
+  max-width: 1000px;
   @media only screen and (max-width: 800px) {
     padding: 10px;
   }  
