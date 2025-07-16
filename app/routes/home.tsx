@@ -14,17 +14,18 @@ export function meta({}: Route.MetaArgs) {
 }
 
 const Body = styled.div`
-  font-family: "dos", sans-serif;
+  font-family: "lores-21-serif", serif;
+  font-weight: bold;
   font-size: 22px;
-  padding: 40px 20px;
+  padding: 40px 0px;
   
-  @media only screen and (max-width: 900px) {
+  @media only screen and (max-width: 800px) {
     font-size: 18px;
   }
 `
 
 const Title = styled.h1`
-  font-family: "dos", sans-serif;
+  font-family: "lores-21-serif", serif;
   text-align: center;
   padding: 0;
   margin: 0 0 40px 0;
@@ -33,9 +34,9 @@ const Title = styled.h1`
 const Emails = styled.div``
 const Email = styled.div`
   display: grid;
-  grid-template-columns: [ordinal] 40px [date] 4fr [from] 4fr [size] 80px [title] 8fr;
+  grid-template-columns: [ordinal] 40px [date] 3fr [from] 4fr [size] 80px [title] 8fr;
   gap: 15px;
-  padding: 5px;
+  padding: 5px 40px;
 
   &:hover {
     background: white;
@@ -47,9 +48,19 @@ const Email = styled.div`
     text-wrap: nowrap;
     overflow-x: hidden;
   }
-
+  
   @media only screen and (max-width: 1280px) {
-    grid-template-columns: [ordinal] 40px [date] 2fr [from] 2fr [size] 0px [title] 8fr;
+    grid-template-columns: [ordinal] 40px [date] 2fr [from] 5fr [size] 80px [title] 8fr;
+    padding: 5px 20px;
+  }
+  
+  @media only screen and (max-width: 800px) {
+    grid-template-columns: [ordinal] 40px [date] 2fr [from] 1fr [size] 3px [title] 8fr;
+  
+  }
+
+  @media only screen and (max-width: 500px) {
+    grid-template-columns: [ordinal] 20px [date] 3fr [from] 1.5fr [size] 3px [title] 9fr;
   }
 `
 const LightText = styled.div`
@@ -58,22 +69,42 @@ const LightText = styled.div`
   }
 `
 
-const SmallHide = styled.span`
+const MediumHide = styled.span`
   @media only screen and (max-width: 1280px) {
     display: none;
+  }
+`
+
+const SmallHide = styled.span`
+  @media only screen and (max-width: 800px) {
+    display: none;
+  }
+`
+
+const SmallShow = styled.span`
+  display: none;
+  
+  @media only screen and (max-width: 800px) {
+    display: initial;
   }
 `
 
 const EmailBody = styled.div`
   padding: 10px 40px;
   white-space: pre-wrap;
+  max-width: 1000px;
   @media only screen and (max-width: 800px) {
     padding: 10px;
   }  
 `
 
+const EmailTitle = styled.div`
+  text-overflow: ellipsis;
+`
+
 type EmailType = {
   from: string;
+  fromLong: string;
   to: string;
   toLong: string; 
   time: string; 
@@ -99,7 +130,7 @@ export default function Home() {
   const [selectedEmail, setSelectedEmail] = React.useState<(typeof emails)[number] | null>(null)
   return <Body>
    <Title>
-      Mailbox is `/user/josi-carder/root` with 2 messages (JosiSOFT 2.1)
+      Mailbox with 2 messages (saved, unread, archived)
     </Title>
     <Emails>
       {emails.map((email,i) => {
@@ -107,17 +138,22 @@ export default function Home() {
           <>
             <Email onClick={() => email === selectedEmail ? setSelectedEmail(null) : setSelectedEmail(email)}>
               <LightText>({i})</LightText>
-              <LightText>{email.time}<SmallHide> {email.timeLong}</SmallHide></LightText>
-              <div>{email.to}<SmallHide> {email.toLong}</SmallHide></div>
-              <LightText><SmallHide>({email.text.length})</SmallHide></LightText>
-              <div>{email.title}</div>
+              <LightText>{email.time}<MediumHide> {email.timeLong}</MediumHide></LightText>
+              <div>{email.from}<SmallHide> {email.fromLong}</SmallHide></div>
+              <LightText>
+                <SmallHide>({email.text.length})</SmallHide>
+                <SmallShow>|</SmallShow>
+              </LightText>
+              <EmailTitle>{email.title}</EmailTitle>
             </Email>
             {email === selectedEmail && (
               <EmailBody>
-                <LightText>Title: {email.title}</LightText>
-                <LightText>From: {email.from}</LightText>
+                <LightText>Subject: {email.title}</LightText>
+                <LightText>From: {email.from} {email.fromLong}</LightText>
                 <LightText>To: {email.to} {email.toLong}</LightText>
+                <br/>
                 {email.text}
+                <br/>
               </EmailBody>
             )}
           </>

@@ -23,6 +23,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
         <link rel="icon" type="image/x-icon" href="/email-poems/favicon.ico" />
+        <link rel="stylesheet" href="https://use.typekit.net/dwp8evb.css" />
       </head>
       <body>
         {children}
