@@ -234,7 +234,7 @@ text: |
   font-family: "lores-21-serif", serif;
   font-weight: bold;
   font-size: 22px;
-  padding: 40px 20px;
+  padding: 40px 0px;
   
   @media only screen and (max-width: 800px) {
     font-size: 18px;
@@ -248,7 +248,7 @@ text: |
   display: grid;
   grid-template-columns: [ordinal] 40px [date] 3fr [from] 4fr [size] 80px [title] 8fr;
   gap: 15px;
-  padding: 5px;
+  padding: 5px 40px;
 
   &:hover {
     background: white;
@@ -263,6 +263,7 @@ text: |
   
   @media only screen and (max-width: 1280px) {
     grid-template-columns: [ordinal] 40px [date] 2fr [from] 5fr [size] 80px [title] 8fr;
+    padding: 5px 20px;
   }
   
   @media only screen and (max-width: 800px) {
